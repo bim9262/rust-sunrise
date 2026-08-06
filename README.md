@@ -30,7 +30,8 @@ particular place and time:
 ```rust
 #[cfg(feature = "chrono")]
 {
-    use chrono::NaiveDate;
+    use chrono::{NaiveDate, DateTime, Utc};
+
     use sunrise::{Coordinates, SolarDay, SolarEvent, DawnType};
 
     // January 1, 2016 in Toronto
@@ -39,7 +40,8 @@ particular place and time:
 
     let dawn = SolarDay::new(coord, date)
         .with_altitude(54.)
-        .event_time(SolarEvent::Dawn(DawnType::Civil));
+        .event_time::<DateTime::<Utc>>(SolarEvent::Dawn(DawnType::Civil))
+        .unwrap();
 }
 ```
 
@@ -48,6 +50,8 @@ particular place and time:
 #[cfg(feature = "jiff")]
 {
     use jiff::civil::Date;
+    use jiff::Timestamp;
+
     use sunrise::{Coordinates, SolarDay, SolarEvent, DawnType};
 
     // January 1, 2016 in Toronto
@@ -56,7 +60,8 @@ particular place and time:
 
     let dawn = SolarDay::new(coord, date)
         .with_altitude(54.)
-        .event_time(SolarEvent::Dawn(DawnType::Civil));
+        .event_time::<Timestamp>(SolarEvent::Dawn(DawnType::Civil))
+        .unwrap();
 }
 ```
 
